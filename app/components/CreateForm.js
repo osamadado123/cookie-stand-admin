@@ -1,15 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState ,useMemo} from "react";
+import { data } from "./data.js"; 
+import {Cookie_admin } from "../custom_hooks/TotalCol.js";
 
-export default function AdminForm() {
+export default function CreateForm(props) {
   const [location, setLocation] = useState("");
   const [minCustomers, setMinCustomers] = useState("");
   const [maxCustomers, setMaxCustomers] = useState("");
   const [avgCookies, setAvgCookies] = useState("");
-  const [allOutputs, setAllOutputs] = useState([]);
+
 
   const handleLocation = (e) => {
     setLocation(e.target.value);
+    
   };
 
   const handleMinCustomers = (e) => {
@@ -25,14 +28,20 @@ export default function AdminForm() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const outpute = `{"location": "${location}","minCustomers":${minCustomers},"maxCustomers":${maxCustomers},"avgCookies":${avgCookies}}`;
+    
+  const cookie = Cookie_admin(data, location)
+  
     const output = {
-      _location: location || "None",
+      _location: location || "Amman",
       min_customers: minCustomers || "None",
       max_customers: maxCustomers || "None",
       avg_cookies: avgCookies || "None",
+      hourlySales: cookie || [48,42,30,24,42,24,36,42,42,48,36,42,24,36,516],
+      
     };
-    setAllOutputs([...allOutputs, output]);
+    props.getUserInput(output);
+  
+
   };
 
   return (
@@ -40,7 +49,7 @@ export default function AdminForm() {
       <section className=" flex justify-center ">
         <form
           onSubmit={handleSubmit}
-          class="relative flex flex-col break-words mb-6 rounded-lg bg-gray-400 rounded-3xl shadow-2xl w-4/5"
+          className="relative flex flex-col break-words mb-6 rounded-lg bg-gray-400 rounded-3xl shadow-2xl w-4/5"
         >
           <div className="mt-7 mb-10 text-center border-b-2 ">
             <span className=" text-xl  text-gray-800 rounded-3xl border-1 border-gray-300 bg-gray-300 py-4 px-5 shadow-lg">
@@ -93,48 +102,10 @@ export default function AdminForm() {
           </div>
           <div className="my-4 text-right mr-4 ">
             <button className=" text-xl  text-gray-200 rounded-3xl border-1 border-indigo-200 bg-sky-700 py-4 px-5 shadow-lg hover:bg-sky-500">
-              Create 
+              Create
             </button>
           </div>
         </form>
-      </section>
-      <section>
-        <table className=" items-center pt-20 pr-48 pb-24 pl-16 gap-24 border-solid ml-40 my-20 ">
-          <tr>
-            <th className="text-left p-3 text-xl bg-gray-700 text-white border-solid border-2 border-gray-400">
-              Location
-            </th>
-            <th className="text-left p-3 text-xl bg-gray-700 text-white border-solid border-2 border-gray-400">
-              Minimum Customers per Hour
-            </th>
-            <th className="text-left p-3 text-xl bg-gray-700 text-white border-solid border-2 border-gray-400">
-              Maximum Customers per Hour
-            </th>
-            <th className="p-3 text-xl bg-gray-700 text-white border-solid border-2 border-gray-400">
-              Average Cookies per Sale
-            </th>
-          </tr>
-
-          {allOutputs.length > 0 &&
-            allOutputs.map((item) => {
-              return (
-                <tr>
-                  <td className="p-3 text-xl text-gray-700 border-solid border-2 border-gray-400">
-                    {item._location}
-                  </td>
-                  <td className="p-3 text-xl text-gray-700 border-solid border-2 border-gray-400">
-                    {item.min_customers}
-                  </td>
-                  <td className="p-3 text-xl text-gray-700 border-solid border-2 border-gray-400">
-                    {item.max_customers}
-                  </td>
-                  <td className="p-3 text-xl text-gray-700 border-solid border-2 border-gray-400">
-                    {item.avg_cookies}
-                  </td>
-                </tr>
-              );
-            })}
-        </table>
       </section>
     </div>
   );
