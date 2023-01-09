@@ -1,8 +1,10 @@
 "use client";
 import CreateForm from "./components/CreateForm";
 import ReportTable from "./components/ReportTable";
-import { useState} from "react";
+import { useState, useContext} from "react";
 import { removeDuplicates } from "./custom_hooks/TotalCol";
+import LoginForm from './components/LoginForm';
+import { AuthContext } from "./contexts/auth";
 
 export default function Home() {
 
@@ -19,19 +21,22 @@ export default function Home() {
     setAllOutputs([...allOutputs, output]);
   }
   let Locations=removeDuplicates(allOutputs)
-  console.log(allOutputs)
+  const { tokens } = useContext(AuthContext);
 
   return (
     <>
-      <main className="flex-1 overflow-y-auto p-5 dark:bg-black">
+    {tokens ? 
+    <main className="flex-1 overflow-y-auto p-20">
         <CreateForm getUserInput={getUserInput} />
         <ReportTable allOutputs={allOutputs} />
-      </main>
-      <div className="py-5 bg-gray-600  dark:bg-gray-800 text-center text-white ">
-        <p className="ml-6 float-left">
-          {Locations.length>0 ? `${Locations.length} Locations world wide`:'0 Location world wide'}
+      <div className=" text-center">
+        <p className="text-2xl  text-gray-500  py-4 px-5 ">
+          {Locations.length > 0 ? `${Locations.length} Locations world wide` : '0 Location world wide'}
         </p>
       </div>
+    </main>
+      : <LoginForm />
+       }
     </>
   );
 }

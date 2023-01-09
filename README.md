@@ -10,11 +10,11 @@
 
 - [Tailwind](https://beta.nextjs.org/docs/styling/tailwind-css)
 
-#### `.env` requirements (where applicable)
+### `.env` requirements (where applicable)
 
 For this lab I did not use .env
 
-#### How to initialize/run your application (where applicable)
+### How to initialize/run your application (where applicable)
 
 ```bash
 npm run dev
@@ -22,10 +22,14 @@ npm run dev
 yarn dev
 ```
 
-#### Tests
+### Tests
 
 There is NO tests for this lab
 
-#### Pull Requests
+### super users
+
+`username: osama password : osamamaher`
+
+### Pull Requests
 
 - [my pull request](https://github.com/osamadado123/cookie-stand-admin/pull/4)
